@@ -14,8 +14,11 @@ test('doorway fills the opening and hands off to Home content', async ({
   await page.goto('/');
 
   const portal = page.locator('[data-entry-portal]');
+  const intro = page.locator('[data-entry-intro]');
   const header = page.locator('.site-header');
   await expect(portal).toBeVisible();
+  await expect(intro).toContainText('Sirpi Interiors presents');
+  await expect(intro).toContainText('Where space becomes a story.');
   await expect(header).toHaveCSS('pointer-events', 'none');
 
   const viewportHeight = page.viewportSize()?.height ?? 1;
@@ -25,6 +28,9 @@ test('doorway fills the opening and hands off to Home content', async ({
   await page.evaluate(() => window.scrollTo(0, window.innerHeight * 0.35));
   await expect(header).toHaveCSS('pointer-events', 'auto');
   await expect(header).toBeVisible();
+  await expect
+    .poll(() => intro.evaluate((element) => Number(getComputedStyle(element).opacity)))
+    .toBeLessThan(0.5);
 
   await page.evaluate(() => window.scrollTo(0, window.innerHeight * 2.3));
   await expect

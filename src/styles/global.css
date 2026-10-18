@@ -256,6 +256,7 @@ textarea {
   --entry-progress: 0;
   --door-progress: 0;
   --camera-progress: 0;
+  --intro-progress: 0;
   --handoff-progress: 0;
   min-height: 100svh;
   background: var(--canvas);
@@ -283,6 +284,71 @@ textarea {
 .entry-shutter {
   position: absolute;
   inset: 0;
+}
+
+.entry-intro {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  padding: 2rem;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  text-align: center;
+  color: var(--paper);
+  text-shadow: 0 0.2rem 2rem rgba(20, 5, 4, 0.72);
+  pointer-events: none;
+}
+
+.entry-intro p {
+  margin: 0;
+  color: var(--gold-soft);
+  font-size: clamp(0.95rem, 1.5vw, 1.3rem);
+  font-weight: 600;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+}
+
+.entry-intro > span {
+  width: clamp(3.5rem, 8vw, 6rem);
+  height: 1px;
+  margin: clamp(1.1rem, 2vw, 1.7rem) 0;
+  background: linear-gradient(90deg, transparent, var(--gold-soft), transparent);
+}
+
+.entry-intro h2 {
+  max-width: 13ch;
+  margin: 0;
+  color: var(--paper);
+  font-size: clamp(3.2rem, 8vw, 7.4rem);
+  font-weight: 500;
+  line-height: 0.82;
+  letter-spacing: -0.045em;
+}
+
+.entry-intro h2 em {
+  color: var(--gold-soft);
+  font-weight: 400;
+}
+
+.entry-intro small {
+  position: absolute;
+  bottom: clamp(2rem, 5vw, 4rem);
+  display: grid;
+  justify-items: center;
+  gap: 0.6rem;
+  color: rgba(255, 250, 242, 0.75);
+  font-size: 0.68rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+.entry-intro small::after {
+  width: 1px;
+  height: 2.75rem;
+  background: linear-gradient(var(--gold-soft), transparent);
+  content: '';
+  animation: entry-scroll-cue 1.8s ease-in-out infinite;
 }
 
 .entry-portal-image {
@@ -322,6 +388,13 @@ html[data-entry-ready] .entry-portal-frame {
   transform: scale(calc(1 - var(--handoff-progress) * 0.045));
   transform-origin: center;
   will-change: transform;
+}
+
+html[data-entry-ready] .entry-intro {
+  opacity: calc(1 - var(--intro-progress));
+  transform: translateY(calc(var(--intro-progress) * -2.5rem))
+    scale(calc(1 - var(--intro-progress) * 0.035));
+  will-change: opacity, transform;
 }
 
 html[data-entry-ready] .site-header {
@@ -392,6 +465,11 @@ html[data-entry-ready] .entry-shutter-end {
   left: auto;
   transform: translateX(calc(var(--door-progress) * 105%));
   transform-origin: right center;
+}
+
+@keyframes entry-scroll-cue {
+  0%, 100% { opacity: 0.35; transform: scaleY(0.55); transform-origin: top; }
+  50% { opacity: 1; transform: scaleY(1); transform-origin: top; }
 }
 
 .arrival-section {

@@ -23,6 +23,12 @@ const { image } = Astro.props;
       <span class="entry-shutter entry-shutter-start" aria-hidden="true"></span>
       <span class="entry-shutter entry-shutter-end" aria-hidden="true"></span>
       <div class="entry-portal-scrim" aria-hidden="true"></div>
+      <div class="entry-intro" data-entry-intro>
+        <p>Sirpi Interiors presents</p>
+        <span aria-hidden="true"></span>
+        <h2>Where space<br /><em>becomes a story.</em></h2>
+        <small>Scroll to enter</small>
+      </div>
     </div>
   </div>
 </section>
@@ -48,10 +54,12 @@ const { image } = Astro.props;
       const progress = Math.min(1, Math.max(0, -rect.top / distance));
       const doorProgress = smoothstep(0.04, 0.68, progress);
       const cameraProgress = smoothstep(0, 1, progress);
+      const introProgress = smoothstep(0.01, 0.3, progress);
       const handoffProgress = smoothstep(0.78, 1, progress);
       portal.style.setProperty('--entry-progress', progress.toFixed(4));
       portal.style.setProperty('--door-progress', doorProgress.toFixed(4));
       portal.style.setProperty('--camera-progress', cameraProgress.toFixed(4));
+      portal.style.setProperty('--intro-progress', introProgress.toFixed(4));
       portal.style.setProperty(
         '--handoff-progress',
         handoffProgress.toFixed(4),
