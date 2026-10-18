@@ -11,17 +11,19 @@ const { image } = Astro.props;
     Sirpi Interiors — step into living heritage
   </h1>
   <div class="entry-portal-stage">
-    <img
-      class="entry-portal-image"
-      src={image}
-      width="1536"
-      height="1024"
-      fetchpriority="high"
-      alt="Original concept of a warm South Indian heritage living room"
-    />
-    <span class="entry-shutter entry-shutter-start" aria-hidden="true"></span>
-    <span class="entry-shutter entry-shutter-end" aria-hidden="true"></span>
-    <div class="entry-portal-scrim" aria-hidden="true"></div>
+    <div class="entry-portal-frame">
+      <img
+        class="entry-portal-image"
+        src={image}
+        width="1536"
+        height="1024"
+        fetchpriority="high"
+        alt="Original concept of a warm South Indian heritage living room"
+      />
+      <span class="entry-shutter entry-shutter-start" aria-hidden="true"></span>
+      <span class="entry-shutter entry-shutter-end" aria-hidden="true"></span>
+      <div class="entry-portal-scrim" aria-hidden="true"></div>
+    </div>
   </div>
 </section>
 
@@ -46,9 +48,14 @@ const { image } = Astro.props;
       const progress = Math.min(1, Math.max(0, -rect.top / distance));
       const doorProgress = smoothstep(0.04, 0.68, progress);
       const cameraProgress = smoothstep(0, 1, progress);
+      const handoffProgress = smoothstep(0.78, 1, progress);
       portal.style.setProperty('--entry-progress', progress.toFixed(4));
       portal.style.setProperty('--door-progress', doorProgress.toFixed(4));
       portal.style.setProperty('--camera-progress', cameraProgress.toFixed(4));
+      portal.style.setProperty(
+        '--handoff-progress',
+        handoffProgress.toFixed(4),
+      );
       document.documentElement.toggleAttribute(
         'data-entry-starting',
         progress < 0.025,

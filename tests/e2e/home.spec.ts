@@ -18,6 +18,17 @@ test('doorway fills the opening and hands off to Home content', async ({
   await expect(header).toHaveCSS('pointer-events', 'auto');
   await expect(header).toBeVisible();
 
+  await page.evaluate(() => window.scrollTo(0, window.innerHeight * 2.3));
+  await expect
+    .poll(() =>
+      portal.evaluate((element) =>
+        Number(
+          getComputedStyle(element).getPropertyValue('--handoff-progress'),
+        ),
+      ),
+    )
+    .toBeGreaterThan(0.5);
+
   await page.locator('#arrival').scrollIntoViewIfNeeded();
   await expect(
     page.getByRole('heading', { name: 'A home begins' }),

@@ -256,8 +256,9 @@ textarea {
   --entry-progress: 0;
   --door-progress: 0;
   --camera-progress: 0;
+  --handoff-progress: 0;
   min-height: 100svh;
-  background: var(--wine-deep);
+  background: var(--canvas);
   color: var(--paper);
 }
 
@@ -267,7 +268,14 @@ textarea {
   display: grid;
   align-items: end;
   overflow: hidden;
+}
+
+.entry-portal-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
   isolation: isolate;
+  background: var(--wine-deep);
 }
 
 .entry-portal-image,
@@ -305,6 +313,15 @@ html[data-entry-ready] .entry-portal {
 html[data-entry-ready] .entry-portal-stage {
   position: sticky;
   top: 0;
+}
+
+html[data-entry-ready] .entry-portal-frame {
+  border-radius: calc(var(--handoff-progress) * 1.25rem);
+  box-shadow: 0 0 calc(var(--handoff-progress) * 4rem)
+    rgba(57, 0, 6, calc(var(--handoff-progress) * 0.24));
+  transform: scale(calc(1 - var(--handoff-progress) * 0.045));
+  transform-origin: center;
+  will-change: transform;
 }
 
 html[data-entry-ready] .site-header {

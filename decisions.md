@@ -1,5 +1,12 @@
 # Engineering decisions
 
+## 2026-10-18: Add a reference-inspired editorial handoff
+
+- Reviewed Saisei Architecture and Casa di Legna as live motion references. Borrowed only their generic principles—pinned visual storytelling, persistent navigation, layered depth, and a composed image-to-content handoff—not their layouts, assets, branding, or copy.
+- Added a final editorial framing phase: the room gently scales into an ivory surround near the end of the intro. This gives the cinematic scene breathing room and visually prepares the warm Arrival page instead of cutting directly from full-bleed imagery.
+- Kept the framing transform on an inner visual layer so the sticky stage remains stable throughout the final scroll phase.
+- Extended the Home browser test to verify that the new framing phase completes on desktop and mobile before the Arrival handoff.
+
 ## 2026-10-18: Keep navigation present through the doorway journey
 
 - Changed the Home header handoff so the distraction-free first frame remains intact, then the fixed header enters after the visitor starts scrolling and stays available throughout the doorway sequence.
