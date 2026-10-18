@@ -2,6 +2,7 @@
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import ScrollReveal from '../components/ScrollReveal.astro';
+import StudioChatbot from '../components/StudioChatbot.astro';
 import { site } from '../data/site';
 import '../styles/global.css';
 
@@ -54,6 +55,7 @@ const socialImage = new URL(image, baseUrl);
       <slot />
     </main>
     <Footer />
+    <StudioChatbot />
     <ScrollReveal />
   </body>
 </html>

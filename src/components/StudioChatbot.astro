@@ -1,0 +1,111 @@
+---
+import { chatbotSuggestions } from '../chatbot/knowledge';
+---
+
+<aside class="studio-chat" data-studio-chat>
+  <button
+    class="studio-chat__launcher"
+    type="button"
+    aria-label="Open Sirpi studio assistant"
+    aria-expanded="false"
+    data-chat-launcher
+  >
+    <span class="studio-chat__launcher-mark" aria-hidden="true">S</span>
+    <span class="studio-chat__launcher-copy">
+      <small>Questions about your space?</small>
+      <strong>Ask Sirpi</strong>
+    </span>
+  </button>
+
+  <section class="studio-chat__panel" aria-label="Sirpi studio assistant" hidden data-chat-panel>
+    <header class="studio-chat__header">
+      <div>
+        <p>Sirpi studio assistant</p>
+        <span><i aria-hidden="true"></i> Website guide</span>
+      </div>
+      <button type="button" aria-label="Close studio assistant" data-chat-close>×</button>
+    </header>
+
+    <div class="studio-chat__messages" aria-live="polite" data-chat-messages>
+      <div class="studio-chat__message studio-chat__message--assistant">
+        Vanakkam. Ask about our published services, sample projects, or how to begin an enquiry.
+      </div>
+    </div>
+
+    <div class="studio-chat__suggestions" data-chat-suggestions>
+      {chatbotSuggestions.map((suggestion) => (
+        <button type="button" data-chat-suggestion={suggestion}>{suggestion}</button>
+      ))}
+    </div>
+
+    <form class="studio-chat__form" data-chat-form>
+      <label class="visually-hidden" for="studio-chat-question">Ask Sirpi a question</label>
+      <input
+        id="studio-chat-question"
+        name="question"
+        type="text"
+        maxlength="240"
+        autocomplete="off"
+        placeholder="Ask about your space…"
+        required
+        data-chat-input
+      />
+      <button type="submit" aria-label="Send question">Send</button>
+    </form>
+    <a class="studio-chat__contact" href="/contact">Start a project enquiry <span aria-hidden="true">↗</span></a>
+  </section>
+</aside>
+
+<script>
+  import { answerQuestion } from '../chatbot/knowledge';
+
+  const root = document.querySelector<HTMLElement>('[data-studio-chat]');
+  const launcher = root?.querySelector<HTMLButtonElement>('[data-chat-launcher]');
+  const panel = root?.querySelector<HTMLElement>('[data-chat-panel]');
+  const close = root?.querySelector<HTMLButtonElement>('[data-chat-close]');
+  const form = root?.querySelector<HTMLFormElement>('[data-chat-form]');
+  const input = root?.querySelector<HTMLInputElement>('[data-chat-input]');
+  const messages = root?.querySelector<HTMLElement>('[data-chat-messages]');
+  const suggestions = root?.querySelector<HTMLElement>('[data-chat-suggestions]');
+
+  const setOpen = (open: boolean) => {
+    if (!panel || !launcher) return;
+    panel.hidden = !open;
+    launcher.setAttribute('aria-expanded', String(open));
+    root?.toggleAttribute('data-open', open);
+    if (open) window.setTimeout(() => input?.focus(), 80);
+  };
+
+  const addMessage = (content: string, role: 'user' | 'assistant') => {
+    if (!messages) return;
+    const message = document.createElement('div');
+    message.className = `studio-chat__message studio-chat__message--${role}`;
+    message.textContent = content;
+    messages.append(message);
+    messages.scrollTo({ top: messages.scrollHeight, behavior: 'smooth' });
+  };
+
+  const ask = (question: string) => {
+    const cleanQuestion = question.trim();
+    if (!cleanQuestion) return;
+    addMessage(cleanQuestion, 'user');
+    suggestions?.setAttribute('hidden', '');
+    window.setTimeout(() => addMessage(answerQuestion(cleanQuestion), 'assistant'), 180);
+  };
+
+  launcher?.addEventListener('click', () => setOpen(panel?.hidden ?? true));
+  close?.addEventListener('click', () => setOpen(false));
+  suggestions?.addEventListener('click', (event) => {
+    const button = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-chat-suggestion]');
+    if (button?.dataset.chatSuggestion) ask(button.dataset.chatSuggestion);
+  });
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!input) return;
+    ask(input.value);
+    input.value = '';
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !panel?.hidden) setOpen(false);
+  });
+</script>
