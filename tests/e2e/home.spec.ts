@@ -14,6 +14,10 @@ test('doorway fills the opening and hands off to Home content', async ({
   const portalHeight = await portal.evaluate((element) => element.scrollHeight);
   expect(portalHeight).toBeGreaterThan(viewportHeight * 3);
 
+  await page.evaluate(() => window.scrollTo(0, window.innerHeight * 0.35));
+  await expect(header).toHaveCSS('pointer-events', 'auto');
+  await expect(header).toBeVisible();
+
   await page.locator('#arrival').scrollIntoViewIfNeeded();
   await expect(
     page.getByRole('heading', { name: 'A home begins' }),

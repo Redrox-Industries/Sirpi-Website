@@ -1,5 +1,13 @@
 # Engineering decisions
 
+## 2026-10-18: Keep navigation present through the doorway journey
+
+- Changed the Home header handoff so the distraction-free first frame remains intact, then the fixed header enters after the visitor starts scrolling and stays available throughout the doorway sequence.
+- Added a translucent burgundy backdrop and restrained shadow while the header overlays the interior. This keeps the supplied Sirpi identity legible without covering the room with an opaque bar.
+- Replaced direct linear scroll mapping with separate eased door and camera phases. The shutters now gather momentum, finish opening before the camera push ends, and hand off to Arrival without a mechanical stop.
+- Kept the existing dependency-free `requestAnimationFrame` approach. A small smoothstep function provides cinematic easing without adding a motion library, and reduced-motion visitors still receive the static layout.
+- Extended the Home browser test to verify that the header becomes visible near the beginning of the intro and remains available at the content handoff.
+
 ## 2026-10-15: Reframe Home as an accessible heritage scroll story
 
 - Added an original doorway-entry component before Home content. Scroll progress opens CSS entrance shutters over a direct heritage living-room concept, then naturally hands the visitor to the existing content.

@@ -31,16 +31,30 @@ const { image } = Astro.props;
 
   if (portal && !reducedMotion.matches) {
     document.documentElement.dataset.entryReady = '';
-    document.documentElement.dataset.entryActive = '';
+    document.documentElement.dataset.entryStarting = '';
+    document.documentElement.dataset.entryImmersive = '';
     let framePending = false;
+
+    const smoothstep = (start: number, end: number, value: number) => {
+      const amount = Math.min(1, Math.max(0, (value - start) / (end - start)));
+      return amount * amount * (3 - 2 * amount);
+    };
 
     const updateEntry = () => {
       const rect = portal.getBoundingClientRect();
       const distance = Math.max(1, portal.offsetHeight - window.innerHeight);
       const progress = Math.min(1, Math.max(0, -rect.top / distance));
-      portal.style.setProperty('--entry-progress', progress.toFixed(3));
+      const doorProgress = smoothstep(0.04, 0.68, progress);
+      const cameraProgress = smoothstep(0, 1, progress);
+      portal.style.setProperty('--entry-progress', progress.toFixed(4));
+      portal.style.setProperty('--door-progress', doorProgress.toFixed(4));
+      portal.style.setProperty('--camera-progress', cameraProgress.toFixed(4));
       document.documentElement.toggleAttribute(
-        'data-entry-active',
+        'data-entry-starting',
+        progress < 0.025,
+      );
+      document.documentElement.toggleAttribute(
+        'data-entry-immersive',
         progress < 0.985,
       );
       framePending = false;
