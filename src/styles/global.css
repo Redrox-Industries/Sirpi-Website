@@ -722,6 +722,7 @@ h2 {
 
 .page-intro {
   padding-block: clamp(5rem, 10vw, 9rem);
+  border-bottom: 1px solid var(--line);
 }
 .page-intro h1 {
   max-width: 13ch;
@@ -1307,6 +1308,22 @@ h2 {
     grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.75fr);
   }
 
+  .page-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.75fr);
+    gap: 2rem 4rem;
+    align-items: end;
+  }
+
+  .page-intro > .eyebrow {
+    grid-column: 1 / -1;
+    margin-bottom: 0;
+  }
+
+  .page-intro .page-lede {
+    margin: 0 0 0.75rem;
+  }
+
   .footer-details {
     grid-template-columns: minmax(0, 1.5fr) minmax(9rem, 0.6fr) minmax(
         12rem,
@@ -1320,6 +1337,14 @@ h2 {
   }
   .project-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .project-grid > .project-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
+  .project-grid > .project-card:last-child:nth-child(odd) .project-image {
+    aspect-ratio: 2 / 1;
   }
   .value-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));

@@ -1,5 +1,13 @@
 import { expect, test } from '@playwright/test';
 
+const secondaryRoutes = [
+  '/about',
+  '/projects',
+  '/services',
+  '/contact',
+  '/privacy',
+];
+
 test('doorway fills the opening and hands off to Home content', async ({
   page,
 }) => {
@@ -71,3 +79,20 @@ test('reduced motion skips the pinned doorway sequence', async ({ page }) => {
   const portalHeight = await portal.evaluate((element) => element.scrollHeight);
   expect(portalHeight).toBeLessThanOrEqual(viewportHeight + 1);
 });
+
+for (const route of secondaryRoutes) {
+  test(`${route} keeps primary content inside the viewport`, async ({
+    page,
+  }) => {
+    await page.goto(route);
+    await expect(page.locator('main h1')).toBeVisible();
+    await expect(page.locator('.site-header')).toBeVisible();
+
+    const hasOverflow = await page.evaluate(
+      () =>
+        document.documentElement.scrollWidth >
+        document.documentElement.clientWidth,
+    );
+    expect(hasOverflow).toBe(false);
+  });
+}

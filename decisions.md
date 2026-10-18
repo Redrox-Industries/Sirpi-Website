@@ -1,5 +1,13 @@
 # Engineering decisions
 
+## 2026-10-18: Carry the editorial motion system across every route
+
+- Audited Home, About Us, Projects, Services, Contact Us, Privacy, and 404 against the established Sirpi visual direction and the reviewed Saisei Architecture and Casa di Legna references.
+- Rebalanced secondary-page intros into an editorial desktop split: title remains dominant on the left while the explanatory copy anchors the right. Mobile keeps the existing single-column reading order.
+- Added one restrained baseline to page intros and extended the existing reveal system to previously static content sections. This gives the full site one motion rhythm without adding another animation mechanism.
+- Let an unmatched final Projects card span the desktop grid with a wider image crop. This removes an accidental empty column while retaining the original project order and mobile stack.
+- Added route-level desktop and mobile browser coverage for visible headings, persistent navigation, and horizontal overflow across all primary secondary pages.
+
 ## 2026-10-18: Add a reference-inspired editorial handoff
 
 - Reviewed Saisei Architecture and Casa di Legna as live motion references. Borrowed only their generic principles—pinned visual storytelling, persistent navigation, layered depth, and a composed image-to-content handoff—not their layouts, assets, branding, or copy.
