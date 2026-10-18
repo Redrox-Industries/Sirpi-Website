@@ -1,5 +1,25 @@
 # Engineering decisions
 
+## 2026-10-18: Add a cinematic brand introduction to the doorway
+
+- Added centered presentation copy over the existing opening doors: “Sirpi Interiors presents,” “Where space becomes a story,” and a restrained scroll cue.
+- Kept the copy within the existing doorway component instead of introducing another overlay system. The same scroll progress now controls the doors, camera movement, intro fade, and header handoff.
+- Enlarged “Sirpi Interiors presents” after visual review so the studio name has enough presence above the main editorial statement on desktop and mobile.
+- Faded and lifted the intro during the first part of the scroll. The header then enters through the existing fixed-navigation transition while the doorway journey continues.
+- Used the established Cormorant Garamond, burgundy, antique-gold, and ivory system so the opening remains part of the Sirpi visual language.
+- Kept all intro layers non-interactive and preserved the static reduced-motion path. Added browser assertions for visible intro copy, scroll fade, and header availability.
+
+## 2026-10-18: Add a website-grounded Sirpi studio assistant
+
+- Added a fixed right-side “Ask Sirpi” launcher to the shared layout so the assistant appears across Home, About, Projects, Services, Contact, Privacy, and the 404 page.
+- Designed the launcher and chat panel in the existing burgundy, antique-gold, warm-ivory, and single-serif visual system instead of carrying over ORION branding or styling.
+- Kept the assistant dependency-free and browser-local. It uses a small deterministic knowledge module rather than an external AI service, which avoids API keys, network latency, and unsupported claims.
+- Grounded answers in `src/data/site.ts` and the published enquiry flow. The assistant covers current service categories, fictional sample projects, studio identity, and how to start an enquiry.
+- Explicitly refuses to invent unapproved phone numbers, email addresses, locations, pricing, real-project claims, or service scope. Contact questions direct visitors to the website enquiry form while business facts remain pending approval.
+- Added quick questions, keyboard submission, Escape-to-close behavior, focus handling, an accessible live message region, responsive sizing, and a direct Contact-page action.
+- Added unit coverage for published services, honest fictional-project labeling, and unpublished contact details. Verified Vitest, Astro diagnostics, and the production build before publication.
+- Initially pushed the feature to `publish-main`, then confirmed Netlify production tracks `main`. Fast-forwarded the same verified commit to `main`, waited for the production deploy, and verified the live HTML contained the assistant.
+
 ## 2026-10-18: Add scroll-led editorial typography
 
 - Extended the existing Intersection Observer reveal system so section headings rise through a clipped text window as their section enters the viewport.
