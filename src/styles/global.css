@@ -894,6 +894,40 @@ h2 {
     transform: translateY(0);
   }
 
+  html[data-motion-ready] [data-reveal] :is(h2, h3) {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(0.7em);
+    transition:
+      opacity var(--motion-medium) var(--ease-soft) 90ms,
+      clip-path var(--motion-slow) var(--ease-out) 90ms,
+      transform var(--motion-slow) var(--ease-out) 90ms;
+  }
+
+  html[data-motion-ready] [data-reveal][data-revealed] :is(h2, h3) {
+    opacity: 1;
+    clip-path: inset(0);
+    transform: translateY(0);
+  }
+
+  html[data-motion-ready] [data-reveal] > .eyebrow,
+  html[data-motion-ready] [data-reveal] > .shell > .eyebrow {
+    opacity: 0;
+    letter-spacing: 0.34em;
+    transform: translateY(0.65rem);
+    transition:
+      opacity var(--motion-medium) var(--ease-soft),
+      letter-spacing var(--motion-slow) var(--ease-out),
+      transform var(--motion-medium) var(--ease-out);
+  }
+
+  html[data-motion-ready] [data-reveal][data-revealed] > .eyebrow,
+  html[data-motion-ready] [data-reveal][data-revealed] > .shell > .eyebrow {
+    opacity: 1;
+    letter-spacing: 0.22em;
+    transform: translateY(0);
+  }
+
   html[data-motion-ready] [data-reveal] .service-row,
   html[data-motion-ready] [data-reveal] .project-card,
   html[data-motion-ready] [data-reveal] .process-list li,

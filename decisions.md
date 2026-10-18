@@ -1,5 +1,13 @@
 # Engineering decisions
 
+## 2026-10-18: Add scroll-led editorial typography
+
+- Extended the existing Intersection Observer reveal system so section headings rise through a clipped text window as their section enters the viewport.
+- Added a quieter companion animation for direct section labels: opacity, vertical position, and letter spacing settle together before the heading completes.
+- Kept content in the original semantic headings and labels instead of splitting words into generated spans. This preserves screen-reader reading order, copy selection, line wrapping, and page content.
+- Scoped every effect behind JavaScript motion readiness and `prefers-reduced-motion: no-preference`; content remains immediately visible when JavaScript is unavailable or reduced motion is requested.
+- Added browser coverage that scrolls an About section into view and verifies its heading reaches the fully visible resting state.
+
 ## 2026-10-18: Carry the editorial motion system across every route
 
 - Audited Home, About Us, Projects, Services, Contact Us, Privacy, and 404 against the established Sirpi visual direction and the reviewed Saisei Architecture and Casa di Legna references.

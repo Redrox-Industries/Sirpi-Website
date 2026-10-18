@@ -96,3 +96,19 @@ for (const route of secondaryRoutes) {
     expect(hasOverflow).toBe(false);
   });
 }
+
+test('section typography reveals as it enters the viewport', async ({
+  page,
+}) => {
+  await page.goto('/about');
+
+  const story = page.locator('.section-band[data-reveal]').first();
+  const heading = story.getByRole('heading', {
+    name: 'Designed to feel lived in.',
+  });
+  await story.scrollIntoViewIfNeeded();
+
+  await expect(story).toHaveAttribute('data-revealed', '');
+  await expect(heading).toHaveCSS('opacity', '1');
+  await expect(heading).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 0, 0)');
+});
