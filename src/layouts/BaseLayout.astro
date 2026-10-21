@@ -17,6 +17,7 @@ const {
   title,
   description = site.description,
   image = '/images/hero-interior.webp',
+  // TODO: flip noindex to false before going live to allow search engine indexing
   noindex = true,
 } = Astro.props;
 
@@ -30,6 +31,8 @@ const socialImage = new URL(image, baseUrl);
 <html lang="en" id="top">
   <head>
     <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
